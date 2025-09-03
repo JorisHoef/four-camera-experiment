@@ -38,10 +38,12 @@ public class FPSMover : MonoBehaviour
 
     private void Update()
     {
+        //TODO: Check why camera in LateUpdate but not our movement
         Vector2 moveInput = ReadMoveInput();
-        var sprint = _enableSprint && IsSprintHeld();
+        var sprint = _enableSprint && IsSprintHeld();// && _cc.isGrounded; TODO: Will probably stop velocity while in a jump.
         var jumpPressed = _enableJump && IsJumpPressed();
 
+        //TODO: Check why it's called wish direction
         Vector3 wishDir = ComputeWishDirection(moveInput);
         var speed = sprint ? _moveSpeed * _sprintMultiplier : _moveSpeed;
 
