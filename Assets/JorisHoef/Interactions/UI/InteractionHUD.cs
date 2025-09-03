@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace JorisHoef.Interactions.UI
 {
+    [AddComponentMenu("JorisHoef/Interactions/UI/Interaction HUD")]
     public sealed class InteractionHUD : MonoBehaviour
     {
 #region Constants and Fields

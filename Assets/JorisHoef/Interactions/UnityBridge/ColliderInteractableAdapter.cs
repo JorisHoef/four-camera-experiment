@@ -6,6 +6,7 @@ namespace JorisHoef.Interactions.UnityBridge
 {
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Collider))]
+    [AddComponentMenu("JorisHoef/Interactions/Unity Bridge/Collider Interactable Adapter")]
     public sealed class ColliderInteractableAdapter : MonoBehaviour
     {
 #region Serialized Fields

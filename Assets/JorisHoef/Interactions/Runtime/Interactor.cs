@@ -9,6 +9,7 @@ namespace JorisHoef.Interactions.Runtime
 {
     [DisallowMultipleComponent]
     [DefaultExecutionOrder(-50)]
+    [AddComponentMenu("JorisHoef/Interactions/Runtime/Interactor")]
     public sealed class Interactor : MonoBehaviour
     {
 #region Constants and Fields

@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 namespace JorisHoef.Interactions.BuiltIns
 {
+    [AddComponentMenu("JorisHoef/Interactions/BuiltIns/Keyboard Interact Input")]
     public sealed class KeyboardInteractInput : MonoBehaviour, IInteractInput
     {
 #region Serialized Fields
@@ -16,7 +17,9 @@ namespace JorisHoef.Interactions.BuiltIns
         {
             Keyboard kb = Keyboard.current;
             if (kb == null)
+            {
                 return false;
+            }
 
             return kb[_primary].wasPressedThisFrame || kb[_secondary].wasPressedThisFrame;
         }

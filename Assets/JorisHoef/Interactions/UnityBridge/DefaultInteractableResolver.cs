@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace JorisHoef.Interactions.UnityBridge
 {
+    [AddComponentMenu("JorisHoef/Interactions/Unity Bridge/Default Interactable Resolver")]
     public sealed class DefaultInteractableResolver : MonoBehaviour, IInteractableResolver
     {
 #region Public Methods

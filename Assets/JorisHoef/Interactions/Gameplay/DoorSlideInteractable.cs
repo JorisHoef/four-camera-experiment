@@ -2,13 +2,14 @@ using System.Collections;
 using JorisHoef.Interactions.Core;
 using UnityEngine;
 
-namespace JorisHoef.Gameplay
+namespace JorisHoef.Interactions.Gameplay
 {
     /// <summary>
     ///     Simple sliding door: toggles between closed and open by moving the target transform
     ///     along a chosen local axis by a fixed distance over a given duration, using an AnimationCurve.
     ///     No physics; purely kinematic.
     /// </summary>
+    [AddComponentMenu("JorisHoef/Interactions/Gameplay/Door Slide Interactable")]
     public sealed class DoorSlideInteractable : MonoBehaviour, IInteractable, IFocusable, ICanInteractReason
     {
 #region Constants and Fields

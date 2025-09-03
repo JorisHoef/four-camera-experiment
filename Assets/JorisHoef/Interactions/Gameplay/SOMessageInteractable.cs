@@ -1,12 +1,12 @@
 using JorisHoef.Interactions.Core;
 using UnityEngine;
 
-namespace JorisHoef.Gameplay
+namespace JorisHoef.Interactions.Gameplay
 {
-    [CreateAssetMenu(menuName = "Interactables/Message")]
+    [CreateAssetMenu(menuName = "JorisHoef/Interactables/Message", fileName = "SOMessageInteractable")]
     public sealed class SOMessageInteractable : ScriptableObject, IInteractable
     {
-#region Constants and Fields
+#region Serialized Fields
         [SerializeField] private string _prompt = "Read";
         [TextArea] [SerializeField] private string _message = "Hello!";
 #endregion
