@@ -4,6 +4,31 @@ using UnityEngine;
 
 namespace JorisHoef.Interactions.UnityBridge
 {
+    /// <summary>
+    ///     Adapter that bridges a <see cref="Collider" /> in the scene to any <see cref="IInteractable" />.
+    ///     <para>
+    ///         Use this when your interactable is not directly a MonoBehaviour on the same GameObject
+    ///         as the collider. Common cases:
+    ///     </para>
+    ///     <list type="bullet">
+    ///         <item>
+    ///             <description>
+    ///                 Linking a <see cref="ScriptableObject" /> interactable (e.g. <c>SOMessageInteractable</c>)
+    ///                 to a collider in the scene.
+    ///             </description>
+    ///         </item>
+    ///         <item>
+    ///             <description>
+    ///                 Forwarding collider hits to an interactable component elsewhere in the hierarchy.
+    ///             </description>
+    ///         </item>
+    ///     </list>
+    ///     <para>
+    ///         Not needed if the interactable is already a component implementing
+    ///         <see cref="IInteractable" /> on the same GameObject as the collider; in that case, the resolver
+    ///         can find it directly.
+    ///     </para>
+    /// </summary>
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Collider))]
     [AddComponentMenu("JorisHoef/Interactions/Unity Bridge/Collider Interactable Adapter")]
