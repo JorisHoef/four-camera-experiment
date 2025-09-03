@@ -1,0 +1,145 @@
+# ===================================
+# Unity Core Folders
+# ===================================
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/MemoryCaptures/
+/UserSettings/
+
+# ===================================
+# Unity Asset Meta and Artifacts
+# ===================================
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.unityproj
+*.sceneid
+*.resS
+*.resource
+*.spriteatlas
+
+# ===================================
+# IDE / Editor Settings
+# ===================================
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Visual Studio
+*.csproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.vcxproj
+*.vcxproj.filters
+*.VC.db
+
+# Visual Studio cache directory
+/.vs/
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# ===================================
+# Unity Package Manager
+# ===================================
+Packages/packages-lock.json
+
+# ===================================
+# Unity Collab & Cloud Build (Optional)
+# ===================================
+.collab/
+.collabignore
+sysinfo.txt
+
+# ===================================
+# Platform-Specific Builds (Android / iOS / ML)
+# ===================================
+
+# Android artifacts
+.gradle/
+*.apk
+*.aab
+*.apks
+*.dex
+*.class
+*.keystore
+*.so
+
+# Gradle wrapper
+**/gradle-wrapper.jar
+**/gradle-wrapper.properties
+**/local.properties
+
+# iOS / Xcode
+build/
+*.xcworkspace/
+*.xcodeproj/
+*.xcuserdata/
+*.pbxuser
+*.mode1v3
+*.mode2v3
+
+# Magic Leap / ML Hub
+.mlconfig/
+.mlrun/
+*.mlog
+*.mpk
+# (Avoid global *.mp4 ignores; scope to a folder if needed)
+# MLExports/**/*.mp4
+
+# IL2CPP / Native Compilation
+Il2CppOutputProject/
+*.exe
+*.dll
+*.dylib
+
+# ...except those in the Assets/Plugins folder.
+!Assets/Packages/**/*.dll
+!Assets/Plugins/**/*.dll
+!Assets/Packages/**/*.so
+!Assets/Plugins/**/*.so
+!Assets/Packages/**/*.jar
+!Assets/Plugins/**/*.jar
+!Assets/Packages/**/*.aar
+!Assets/Plugins/**/*.aar
+
+# ===================================
+# XR / AR / OpenXR Settings
+# ===================================
+.openxr/
+.xr/
+*.xrsettings
+*.arsettings
+*.mlsettings
+
+# ===================================
+# Crash Logs / Temporary Files
+# ===================================
+*.log
+*.stacktrace
+*.bak
+*.swp
+*.tmp
+*.old
+
+# ===================================
+# OS-Specific Files
+# ===================================
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+Icon?
+._*
+*.vsidx
