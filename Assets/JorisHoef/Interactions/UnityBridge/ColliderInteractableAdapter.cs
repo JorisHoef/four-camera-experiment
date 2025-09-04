@@ -1,5 +1,6 @@
 using EditorAttributes;
 using JorisHoef.Interactions.Core;
+using JorisHoef.Interactions.UX;
 using UnityEngine;
 
 namespace JorisHoef.Interactions.UnityBridge
@@ -50,10 +51,11 @@ namespace JorisHoef.Interactions.UnityBridge
         {
             if (_reference != null && !TryResolve(_reference, out _))
             {
-                Debug.LogError($"[{nameof(ColliderInteractableAdapter)}] Assigned object '{_reference.name}' does not expose an {nameof(IInteractable)} on itself or the GameObject. "
-                              +
-                               $"Drag the specific component/asset that implements {nameof(IInteractable)} or a GameObject that has one.",
-                               this);
+                string msg = Texts.Get("adapter.invalidRef",
+                                       $"Assigned object '{_reference.name}' does not expose an IInteractable on itself or the GameObject. "
+                                      +
+                                       "Drag the specific component/asset that implements IInteractable or a GameObject that has one.");
+                Debug.LogError($"[{nameof(ColliderInteractableAdapter)}] {msg}", this);
             }
         }
 #endregion

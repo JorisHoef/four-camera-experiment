@@ -3,7 +3,6 @@ using System.Reflection;
 using EditorAttributes;
 using JorisHoef.Interactions.BuiltIns;
 using JorisHoef.Interactions.Core;
-using JorisHoef.Interactions.Installers;
 using JorisHoef.Interactions.Logic;
 using JorisHoef.Interactions.UnityBridge;
 using UnityEngine;
@@ -59,11 +58,6 @@ namespace JorisHoef.Interactions.Runtime
 
 #region Public Properties
         public IInteractable Current { get; private set; }
-
-        /// <summary>
-        ///     What the user will see in a screenspace UI like "Press {Button}" to Open Door"
-        /// </summary>
-        public string CurrentPrompt => Current?.Prompt;
 #endregion
 
 #region Private Properties
@@ -115,6 +109,7 @@ namespace JorisHoef.Interactions.Runtime
                     gain.OnFocusGained(in gainCtx);
                 }
 
+                ApplyFocusVisuals(prev, Current, lostCtx, gainCtx);
                 FocusChanged?.Invoke(prev, Current);
             }
 
@@ -134,7 +129,44 @@ namespace JorisHoef.Interactions.Runtime
         }
 #endregion
 
+#region Public Methods
+        public bool TryGetFocusedGameObject(out GameObject go)
+        {
+            go = _lastHit.collider ? _lastHit.collider.gameObject : null;
+            return go != null;
+        }
+#endregion
+
 #region Private Methods
+        private static GameObject FocusGO(in InteractionContext ctx) =>
+                ctx.Hit.collider ? ctx.Hit.collider.gameObject : null;
+
+        private static void ApplyFocusVisuals(IInteractable prev,
+                                              IInteractable next,
+                                              in InteractionContext lostCtx,
+                                              in InteractionContext gainCtx)
+        {
+            GameObject prevGO = FocusGO(in lostCtx);
+            if (prevGO)
+            {
+                IFocusVisual[] visuals = prevGO.GetComponentsInChildren<IFocusVisual>(true);
+                for (int i = 0; i < visuals.Length; i++)
+                {
+                    visuals[i].HideFocus(in lostCtx);
+                }
+            }
+
+            GameObject nextGO = FocusGO(in gainCtx);
+            if (nextGO)
+            {
+                IFocusVisual[] visuals = nextGO.GetComponentsInChildren<IFocusVisual>(true);
+                for (int i = 0; i < visuals.Length; i++)
+                {
+                    visuals[i].ShowFocus(in gainCtx);
+                }
+            }
+        }
+
         /// <summary>
         ///     Finds and returns which object gave us the interactionContext
         /// </summary>

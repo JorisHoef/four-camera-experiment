@@ -1,6 +1,6 @@
 namespace JorisHoef.Interactions
 {
-    public class InteractionConstants
+    public static class InteractionConstants
     {
 #region Constants and Fields
         public const int AUTO_SETUP = -100;

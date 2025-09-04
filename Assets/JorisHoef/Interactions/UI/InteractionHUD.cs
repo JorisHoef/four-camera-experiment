@@ -1,5 +1,6 @@
 using System.Collections;
 using JorisHoef.Interactions.Core;
+using JorisHoef.Interactions.Prompts;
 using JorisHoef.Interactions.Runtime;
 using TMPro;
 using UnityEngine;
@@ -69,9 +70,21 @@ namespace JorisHoef.Interactions.UI
 #region Event Handlers
         private void OnFocusChanged(IInteractable prev, IInteractable next)
         {
-            _promptLabel.text = next != null
-                                        ? $"[E] {next.Prompt}"
-                                        : string.Empty;
+            if (next == null || !_interactor.TryGetFocusedGameObject(out GameObject go))
+            {
+                _promptLabel.text = string.Empty;
+                return;
+            }
+
+            IPromptProvider provider = go.GetComponentInParent<IPromptProvider>();
+            if (provider != null && provider.HasPrompt && !string.IsNullOrEmpty(provider.Prompt))
+            {
+                _promptLabel.text = $"[E] {provider.Prompt}";
+            }
+            else
+            {
+                _promptLabel.text = string.Empty;
+            }
         }
 
         private void OnBlocked(IInteractable target, string reason)

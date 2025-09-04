@@ -1,14 +1,10 @@
 using System.Collections;
 using JorisHoef.Interactions.Core;
+using JorisHoef.Interactions.UX;
 using UnityEngine;
 
 namespace JorisHoef.Interactions.Gameplay
 {
-    /// <summary>
-    ///     Simple sliding door: toggles between closed and open by moving the target transform
-    ///     along a chosen local axis by a fixed distance over a given duration, using an AnimationCurve.
-    ///     No physics; purely kinematic.
-    /// </summary>
     [AddComponentMenu("JorisHoef/Interactions/Gameplay/Door Slide Interactable")]
     public sealed class DoorSlideInteractable : MonoBehaviour, IInteractable, IFocusable, ICanInteractReason
     {
@@ -30,16 +26,7 @@ namespace JorisHoef.Interactions.Gameplay
         [SerializeField] private float _duration = 0.6f;
         [SerializeField] private AnimationCurve _curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
-        [Header("UX")]
-        [Tooltip("What the user will see in a screenspace UI like \"Press {Button}\" to Open Door\"")]
-        [SerializeField]
-        private string _prompt = "Open/Close";
-
         [SerializeField] private bool _startOpen;
-#endregion
-
-#region Public Properties
-        public string Prompt => _prompt;
 #endregion
 
 #region Private Properties
@@ -60,9 +47,7 @@ namespace JorisHoef.Interactions.Gameplay
             {
                 _door = transform;
             }
-
             _closedLocalPos = _door.localPosition;
-
             if (_startOpen)
             {
                 _door.localPosition = OpenLocalPos;
@@ -92,7 +77,7 @@ namespace JorisHoef.Interactions.Gameplay
         {
             if (_isMoving)
             {
-                return InteractionResult.FailureFrom(this, "Door is moving.");
+                return InteractionResult.FailureFrom(this, Texts.Get("door.busy", "Busy."));
             }
 
             Vector3 from = _door.localPosition;
@@ -105,33 +90,26 @@ namespace JorisHoef.Interactions.Gameplay
             _moveRoutine = StartCoroutine(AnimateTo(from, to));
 
             _isOpen = !_isOpen;
-            return InteractionResult.SuccessFrom(this, _isOpen ? "Door opened." : "Door closed.");
+            string msgKey = _isOpen ? "door.opened" : "door.closed";
+            return InteractionResult.SuccessFrom(this, Texts.Get(msgKey, _isOpen ? "Opened." : "Closed."));
         }
 
-        public string GetCannotInteractReason(in InteractionContext ctx) => _isMoving ? "Door is moving." : null;
+        public string GetCannotInteractReason(in InteractionContext ctx) =>
+                _isMoving ? Texts.Get("door.busy", "Busy.") : null;
 
-        public void OnFocusGained(in InteractionContext ctx)
-        {
-            /* optional highlight */
-        }
-
-        public void OnFocusLost(in InteractionContext ctx)
-        {
-            /* optional unhighlight */
-        }
+        public void OnFocusGained(in InteractionContext ctx) { }
+        public void OnFocusLost(in InteractionContext ctx) { }
 #endregion
 
 #region Private Methods
         private IEnumerator AnimateTo(Vector3 from, Vector3 to)
         {
             _isMoving = true;
-            float t = 0f;
-            float dur = Mathf.Max(0.0001f, _duration);
+            float t = 0f, dur = Mathf.Max(0.0001f, _duration);
             while (t < dur)
             {
                 t += Time.deltaTime;
-                float u = Mathf.Clamp01(t / dur);
-                float k = _curve.Evaluate(u);
+                float k = _curve.Evaluate(Mathf.Clamp01(t / dur));
                 _door.localPosition = Vector3.LerpUnclamped(from, to, k);
                 yield return null;
             }
