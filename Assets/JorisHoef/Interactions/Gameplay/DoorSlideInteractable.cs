@@ -69,6 +69,20 @@ namespace JorisHoef.Interactions.Gameplay
                 _isOpen = true;
             }
         }
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (!GetComponent<Collider>() && GetComponentInChildren<Collider>() == null)
+            {
+                Debug.LogWarning($"[{nameof(DoorSlideInteractable)}] No Collider found on this object or its children. "
+                                +
+                                 "Interactor raycasts need a collider to detect this interactable. " +
+                                 "Add a collider here/underneath, or mount this via a ColliderInteractableAdapter on a collider GameObject.",
+                                 this);
+            }
+        }
+#endif
 #endregion
 
 #region Public Methods

@@ -1,14 +1,18 @@
 using System;
+using System.Reflection;
 using EditorAttributes;
+using JorisHoef.Interactions.BuiltIns;
 using JorisHoef.Interactions.Core;
+using JorisHoef.Interactions.Installers;
 using JorisHoef.Interactions.Logic;
+using JorisHoef.Interactions.UnityBridge;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace JorisHoef.Interactions.Runtime
 {
     [DisallowMultipleComponent]
-    [DefaultExecutionOrder(-50)]
+    [DefaultExecutionOrder(InteractionConstants.INTERACTOR)]
     [AddComponentMenu("JorisHoef/Interactions/Runtime/Interactor")]
     public sealed class Interactor : MonoBehaviour
     {
@@ -198,5 +202,39 @@ namespace JorisHoef.Interactions.Runtime
             return false;
         }
 #endregion
+
+#if UNITY_EDITOR
+        private void Reset()
+        {
+            if (_rayProviderObj == null)
+            {
+                RayFromTransform ray = gameObject.GetComponent<RayFromTransform>()
+                                    ?? gameObject.AddComponent<RayFromTransform>();
+                if (ray && ray.GetComponent<Camera>() == null && Camera.main)
+                {
+                    ray.GetType()
+                       .GetField("_origin", BindingFlags.NonPublic | BindingFlags.Instance)
+                      ?.SetValue(ray, Camera.main.transform);
+                }
+                _rayProviderObj = ray;
+            }
+
+            if (_inputObj == null)
+            {
+                KeyboardInteractInput input = gameObject.GetComponent<KeyboardInteractInput>()
+                                           ?? gameObject.AddComponent<KeyboardInteractInput>();
+                _inputObj = input;
+            }
+
+            if (_resolverObj == null)
+            {
+                DefaultInteractableResolver resolver = gameObject.GetComponent<DefaultInteractableResolver>()
+                                                    ?? gameObject.AddComponent<DefaultInteractableResolver>();
+                _resolverObj = resolver;
+            }
+        }
+
+        [ContextMenu("Auto Wire Defaults")] private void AutoWireDefaults() => Reset();
+#endif
     }
 }
